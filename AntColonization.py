@@ -144,6 +144,7 @@ class Ant():
         self.location = None;
         self.start = None
         self.visited = []
+        self.usedEdges = []
 
         self.distance = 0
 
@@ -151,6 +152,7 @@ class Ant():
         self.location = start
         self.distance = 0
         self.visited = []
+        self.usedEdges = []
         if start == None:
             self.location = self.parent.randomNode()
         self.start = self.location
@@ -161,14 +163,20 @@ class Ant():
                 path = self.location.shortestPath(self)
             else:
                 path = self.location.preferredPath(self)
+
+            self.usedEdges.append(path)
             self.distance += path.length
-            self.location = path.travelOn(self.location)
+            self.location = path.otherNode(self.location)
             self.visitNode(self.location)
 
         path = self.parent.findEdgeBetweenNodes(self.location.tag,self.start.tag)
         self.distance += path.length
         self.location = path.travelOn(self.location)
         self.visitNode(self.location)
+
+        pathWeight = determineEdgeValue(self.distance)
+        for edge in self.usedEdges:
+            edge.weight += pathWeight
 
         if report == True:
             return [self.distance,self.visited]

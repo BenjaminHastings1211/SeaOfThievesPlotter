@@ -4,8 +4,6 @@ import AntColonization
 
 W,H = 600,600
 
-
-
 def mapVal(s,a1,a2,b1,b2):
     return b1 + ((s - a1)*(b2-b1))/(a2-a1);
 
@@ -84,6 +82,7 @@ def generatePoints(num,margin,seed=0):
     return points
 
 seed = random.randint(-1000,1000)
+seed = 15
 print("seed: ",seed)
 
 app = Window([W,H])
@@ -93,6 +92,7 @@ nodes = 20
 colony = AntColony(50000)
 
 colony.addVisualNode(*generatePoints(nodes,25,15))
+
 colony.generateVisualEdges()
 
 start = colony.nodes[0]
