@@ -25,7 +25,7 @@ class AntColony(AntColonization.AntColony):
         count = 0
         for first in range(0,self.nodeCounter-1):
             for second in range(first+1,self.nodeCounter):
-                edge = Edge(count,self.nodes[first],self.nodes[second])
+                edge = Edge(count,self.nodeCounter,self.nodes[first],self.nodes[second])
                 self.edges.append(edge)
                 self.edgeDict[AntColonization.intJoin(first,second)] = edge
                 count += 1
@@ -64,13 +64,25 @@ class Node(AntColonization.Node):
 
 
 class Window(Tk):
-    def __init__(self,size,*args,**kwargs):
+    def __init__(self,ants,size,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.size = size
         self.geometry("%sx%s"%(size[0],size[1]))
 
         self.screen = Canvas(self,width=size[0],height=size[1],bd=0,highlightthickness=0,bg='white')
         self.screen.pack()
+
+        self.c = AntColony(ants)
+
+    def run(self,visualUpdates=-1):
+        for i in range(self.c.popSize):
+            self.c.ant.tour(None,False)
+            if i % visualUpdates == 0 and visualUpdates != -1 and i != 0:
+                self.c.hideAll()
+                self.c.displayPath(self.c.ant.shortestTrip[1])
+                self.update()
+                self.update_idletasks()
+
 
 def generatePoints(num,margin,seed=0):
     random.seed(seed)
@@ -82,33 +94,30 @@ def generatePoints(num,margin,seed=0):
     return points
 
 seed = random.randint(-1000,1000)
-seed = 15
+# seed = 836
 print("seed: ",seed)
 
-app = Window([W,H])
+app = Window(10000,[W,H])
 s = time.time()
-nodes = 20
+nodes = 10
 
-colony = AntColony(50000)
 
-colony.addVisualNode(*generatePoints(nodes,25,15))
+app.c.addVisualNode(*generatePoints(nodes,75,seed))
 
-colony.generateVisualEdges()
+app.c.generateVisualEdges()
 
-start = colony.nodes[0]
+start = app.c.nodes[0]
 
-dist,path = colony.ant.tour(start,False,report=True)
+app.run(-1)
 
-colony.runPopulation()
+finalDist, finalPath = app.c.ant.shortestTrip
 
-finalDist, finalPath = colony.ant.tour(start,True,report=True)
-
-colony.hideAll()
-print('Original Tour Length: %s'%(round(dist,2)))
+app.c.hideAll()
+print('Original Tour Length: %s'%(round(app.c.ant.longestTrip,2)))
 print('Final Tour Length: %s'%(round(finalDist,2)))
-print('Shortened By: ' + str(round((dist-finalDist)/dist * 100,2)) + '%')
+print('Shortened By: ' + str(round((app.c.ant.longestTrip-finalDist)/app.c.ant.longestTrip * 100,2)) + '%')
 print(finalPath)
-colony.displayPath(finalPath,'black')
+app.c.displayPath(finalPath,'black')
 
 print('Took: %s seconds'%round(time.time()-s,2))
 app.mainloop()
