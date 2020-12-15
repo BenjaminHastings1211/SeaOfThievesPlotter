@@ -88,11 +88,11 @@ print("seed: ",seed)
 
 app = Window([W,H])
 s = time.time()
-nodes = 30
+nodes = 20
 
-colony = AntColony(50)
+colony = AntColony(50000)
 
-colony.addVisualNode(*generatePoints(nodes,25,-51))
+colony.addVisualNode(*generatePoints(nodes,25,15))
 colony.generateVisualEdges()
 
 start = colony.nodes[0]
