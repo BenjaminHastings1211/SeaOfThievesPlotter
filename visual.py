@@ -1,8 +1,9 @@
 from tkinter import *
+from PossionDisc import PossionDiscSampling as Sampling
 import random,time
 import AntColonization
 
-W,H = 600,600
+W,H = int(1440//3*2),int(800//3*2)
 
 def mapVal(s,a1,a2,b1,b2):
     return b1 + ((s - a1)*(b2-b1))/(a2-a1);
@@ -84,25 +85,16 @@ class Window(Tk):
                 self.update_idletasks()
 
 
-def generatePoints(num,margin,seed=0):
-    random.seed(seed)
-    points = []
-    for i in range(num):
-        points.append((random.randint(margin,W-margin),random.randint(margin,H-margin)))
-
-    random.seed(time.time())
-    return points
-
-seed = random.randint(-1000,1000)
-# seed = 836
-print("seed: ",seed)
-
-app = Window(10000,[W,H])
+app = Window(30000,[W,H])
 s = time.time()
 nodes = 10
+margin = 25
 
+sample = Sampling(90,20)
+sample.defineGrid((W-(margin*2),H-(margin*2)))
+sample.createPoints()
 
-app.c.addVisualNode(*generatePoints(nodes,75,seed))
+app.c.addVisualNode(*[[x+margin,y+margin] for x,y in sample.points])
 
 app.c.generateVisualEdges()
 

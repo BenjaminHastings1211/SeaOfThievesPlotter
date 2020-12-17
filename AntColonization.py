@@ -1,7 +1,7 @@
 import random, math, time
+from PossionDisc import PossionDiscSampling as Sampling
 
 W,H = 600,600
-MAX_WEIGHT = 100
 
 def dist(n1,n2):
     return math.sqrt((n1.pos[0]-n2.pos[0])**2 + (n1.pos[1]-n2.pos[1])**2)
@@ -68,9 +68,8 @@ class Edge():
     def __init__(self,i,total,node1,node2):
         self.tag = i
         self.nodes = [node1,node2]
-        # print(self.nodes)
         self.length = dist(self.nodes[0],self.nodes[1])
-        self.value = determineEdgeValue(self.length,0.7)
+        self.value = determineEdgeValue(self.length,1.5)
         self.weight = 0.0
 
         for node in self.nodes:
