@@ -89,6 +89,8 @@ class AntColony():
         self.nodes = []
         self.edges = []
         self.edgeDict = {}
+        self.solution = None
+        self.edgesCreated = False
 
         self.popSize = populationSize
         self.startNode = None
@@ -109,6 +111,7 @@ class AntColony():
 
     # create all edges connecting the nodes
     def generateEdges(self):
+        self.edgesCreated = True
         count = 0
         for first in range(0,self.nodeCounter-1):
             for second in range(first+1,self.nodeCounter):
@@ -118,11 +121,11 @@ class AntColony():
                 count += 1
 
     def runPopulation(self):
+        if self.edgesCreated == False:
+            self.generateEdges()
+            self.edgesCreated = True
         for i in range(self.popSize):
             self.ant.tour(None)
-
-    def bestTour(self,start):
-        return self.ant.shortestTrip
 
 class Ant():
     def __init__(self,parent):
@@ -144,6 +147,7 @@ class Ant():
             self.longestTrip = self.distance
         elif self.shortestTrip[0] > self.distance:
             self.shortestTrip = [self.distance,self.visited]
+            self.parent.solution = self.shortestTrip
 
     def tour(self,start,report=False):
         self.location = start

@@ -100,7 +100,7 @@ app.c.generateVisualEdges()
 
 start = app.c.nodes[0]
 
-app.run(-1)
+app.run(50)
 
 finalDist, finalPath = app.c.ant.shortestTrip
 

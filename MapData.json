@@ -1,1 +1,398 @@
-{"islands": {"Sanctuary Outpost": [5, 7], "Golden Sands Outpost": [3, 10], "Plunder Outpost": [9, 18], "Ancient Spire Outpost": [16, 17], "Galleon's Grave Outpost": [17, 8], "Dagger Tooth Outpost": [12, 8], "Morrow's Peak Outpost": [21, 17], "Barnacle Cay": [14, 15], "Black Sand Atoll": [14, 3], "Black Water Enclave": [17, 5], "Blind Man's Lagoon": [13, 6], "Booty Isle": [10, 20], "Boulder Cay": [6, 5], "Brimstone Rock": [23, 18], "Castaway Isle": [10, 14], "Chicken Isle": [8, 16], "Cinder Islet": [20, 14], "Crescent Isle": [1, 9], "Cursewater Shores": [24, 13], "Cutlass Cay": [12, 18], "Flame's End": [21, 19], "Fools Lagoon": [8, 14], "Forsaken Brink": [20, 16], "Glowstone Cay": [25, 18], "Isle of Last Words": [14, 9], "Lagoon of Whispers": [3, 12], "Liar's Backbone": [18, 11], "Lonely Isle": [6, 8], "Lookout Point": [8, 20], "Magma's Tide": [24, 20], "Mutineer Rock": [13, 19], "Old Salts Atoll": [5, 18], "Paradise Spring": [11, 17], "Picaroon Palms": [8, 4], "Plunderer's Plight": [16, 6], "Rapier Cay": [3, 8], "Roaring Sands": [20, 21], "Rum Runner Isle": [7, 9], "Salty Sands": [6, 3], "Sandy Shallows": [3, 5], "Scorched Pass": [23, 11], "Scurvy Isley": [10, 4], "Sea Dog's Rest": [2, 11], "Shark Tooth Key": [15, 13], "Shiver Retreat": [16, 11], "Tri-Rock Isle": [17, 10], "Twin Groves": [7, 11], "Ashen Reaches": [21, 23], "Cannon Cove": [6, 10], "Crook's Hollow": [12, 16], "Devil's Ridge": [15, 19], "Discovery Ridge": [4, 17], "Fetcher's Rest": [21, 12], "Flintlock Peninsula": [22, 14], "Kraken's Fall": [17, 12], "Lone Cove": [7, 6], "Marauder's Arch": [16, 3], "Mermaid's Hideaway": [1, 13], "Old Faithful Isle": [12, 4], "Plunder Valley": [6, 16], "Ruby's Fall": [24, 16], "Sailor's Bounty": [2, 4], "Shark Bait Cove": [7, 19], "Shipwreck Bay": [12, 10], "Smugglers' Bay": [5, 3], "Snake Island": [10, 16], "The Crooked Masts": [14, 11], "The Devil's Thirst": [22, 21], "The Sunken Grove": [15, 7], "Thieves' Haven": [11, 20], "Wanderers Refuge": [5, 12], "Hidden Spring Keep": [8, 8], "Keel Haul Fort": [2, 6], "Kraken Watchtower": [11, 6], "Lost Gold Fort": [7, 17], "Old Boot Fort": [11, 14], "Molten Sands Fortress": [25, 11], "Sailor's Knot Stronghold": [4, 14], "Shark Fin Camp": [15, 5], "Skull Keep": [15, 9], "The Crow's Nest Fortress": [14, 17], "Brian's Bazaar": [24, 12], "Roaring Traders": [20, 20], "Stephen's Spoils": [11, 15], "The Finest Trading Post": [5, 17], "The North Star Seapost": [7, 10], "The Spoils of Plenty Store": [1, 7], "The Wild Treasures Store": [14, 4], "Three Paces East Seapost": [18, 9]}}
+{
+  "islands": {
+    "Sanctuary Outpost": [
+      5.3,
+      7.3
+    ],
+    "Golden Sands Outpost": [
+      3.9,
+      10.9
+    ],
+    "Plunder Outpost": [
+      9.99,
+      18.6
+    ],
+    "Ancient Spire Outpost": [
+      16.25,
+      17.5
+    ],
+    "Galleon's Grave Outpost": [
+      17.6,
+      8.3
+    ],
+    "Dagger Tooth Outpost": [
+      12.8,
+      8.1
+    ],
+    "Morrow's Peak Outpost": [
+      21.6,
+      17.6
+    ],
+    "Barnacle Cay": [
+      14.8,
+      15.99
+    ],
+    "Black Sand Atoll": [
+      14.5,
+      3.99
+    ],
+    "Black Water Enclave": [
+      17.5,
+      5.4
+    ],
+    "Blind Man's Lagoon": [
+      13.9,
+      6.4
+    ],
+    "Booty Isle": [
+      10.3,
+      20.9
+    ],
+    "Boulder Cay": [
+      6.1,
+      5.4
+    ],
+    "Brimstone Rock": [
+      23.99,
+      18.9
+    ],
+    "Castaway Isle": [
+      10.1,
+      14.1
+    ],
+    "Chicken Isle": [
+      8.45,
+      16.1
+    ],
+    "Cinder Islet": [
+      20.5,
+      14.6
+    ],
+    "Crescent Isle": [
+      1.9,
+      9.6
+    ],
+    "Cursewater Shores": [
+      24.1,
+      13.55
+    ],
+    "Cutlass Cay": [
+      12.7,
+      18.4
+    ],
+    "Flame's End": [
+      21.8,
+      19.9
+    ],
+    "Fools Lagoon": [
+      8.7,
+      14.5
+    ],
+    "The Reaper's Hideout": [
+      8.7,
+      12.7
+    ],
+    "The Forsaken Brink": [
+      20,
+      16.5
+    ],
+    "Glowstone Cay": [
+      25.6,
+      18.9
+    ],
+    "Isle of Last Words": [
+      14.2,
+      9.4
+    ],
+    "Lagoon of Whispers": [
+      3.7,
+      12.9
+    ],
+    "Liar's Backbone": [
+      18.4,
+      11.3
+    ],
+    "Lonely Isle": [
+      6.9,
+      8.4
+    ],
+    "Lookout Point": [
+      8.9,
+      20.4
+    ],
+    "Magma's Tide": [
+      24.7,
+      20.9
+    ],
+    "Mutineer Rock": [
+      13.6,
+      19.7
+    ],
+    "Old Salts Atoll": [
+      5.4,
+      18.9
+    ],
+    "Paradise Spring": [
+      11.5,
+      17.5
+    ],
+    "Picaroon Palms": [
+      8.4,
+      4.7
+    ],
+    "Plunderer's Plight": [
+      16.7,
+      6.6
+    ],
+    "Rapier Cay": [
+      3.6,
+      8.6
+    ],
+    "Burning Sands": [
+      20.25,
+      21.75
+    ],
+    "Rum Runner Isle": [
+      7.9,
+      9.8
+    ],
+    "Salty Sands": [
+      6.99,
+      3.99
+    ],
+    "Sandy Shallows": [
+      3.99,
+      5.2
+    ],
+    "Scorched Pass": [
+      23.2,
+      11.3
+    ],
+    "Scurvy Isley": [
+      10.7,
+      4.6
+    ],
+    "Sea Dog's Rest": [
+      2.1,
+      11.7
+    ],
+    "Shark Tooth Key": [
+      15.8,
+      13.1
+    ],
+    "Shiver Retreat": [
+      16.4,
+      11.5
+    ],
+    "Tri-Rock Isle": [
+      17.3,
+      10.3
+    ],
+    "Twin Groves": [
+      7.3,
+      11.7
+    ],
+    "Ashen Reaches": [
+      21.2,
+      23.4
+    ],
+    "Cannon Cove": [
+      6.1,
+      10.1
+    ],
+    "Crook's Hollow": [
+      12.9,
+      16.25
+    ],
+    "Devil's Ridge": [
+      15.6,
+      19.8
+    ],
+    "Discovery Ridge": [
+      4.2,
+      17.3
+    ],
+    "Fetcher's Rest": [
+      21.5,
+      12.5
+    ],
+    "Flintlock Peninsula": [
+      22.5,
+      14.99
+    ],
+    "Kraken's Fall": [
+      17.5,
+      12.99
+    ],
+    "Lone Cove": [
+      7.6,
+      6.5
+    ],
+    "Marauder's Arch": [
+      16.5,
+      3.8
+    ],
+    "Mermaid's Hideaway": [
+      1.99,
+      13.7
+    ],
+    "Old Faithful Isle": [
+      12.9,
+      4.7
+    ],
+    "Plunder Valley": [
+      6.3,
+      16.3
+    ],
+    "Ruby's Fall": [
+      24.4,
+      16.6
+    ],
+    "Sailor's Bounty": [
+      2.2,
+      4.9
+    ],
+    "Shark Bait Cove": [
+      7.2,
+      19.9
+    ],
+    "Shipwreck Bay": [
+      12.5,
+      10.8
+    ],
+    "Smugglers' Bay": [
+      5.1,
+      3.7
+    ],
+    "Snake Island": [
+      10.3,
+      16
+    ],
+    "The Crooked Masts": [
+      14.7,
+      11.6
+    ],
+    "The Devil's Thirst": [
+      22.7,
+      21.6
+    ],
+    "The Sunken Grove": [
+      15.2,
+      7.8
+    ],
+    "Thieves' Haven": [
+      11.99,
+      20.3
+    ],
+    "Wanderers Refuge": [
+      5.9,
+      12.99
+    ],
+    "Hidden Spring Keep": [
+      8.7,
+      8.2
+    ],
+    "Keel Haul Fort": [
+      2.9,
+      6.9
+    ],
+    "Kraken Watchtower": [
+      11.3,
+      6.4
+    ],
+    "Lost Gold Fort": [
+      7.9,
+      17.8
+    ],
+    "Old Boot Fort": [
+      11,
+      14
+    ],
+    "Molten Sands Fortress": [
+      25.3,
+      11.99
+    ],
+    "Sailor's Knot Stronghold": [
+      4.4,
+      14.7
+    ],
+    "Shark Fin Camp": [
+      15.3,
+      5.5
+    ],
+    "Skull Keep": [
+      15.8,
+      9.8
+    ],
+    "The Crow's Nest Fortress": [
+      14.2,
+      17.99
+    ],
+    "Brian's Bazaar": [
+      24.25,
+      12.35
+    ],
+    "Roaring Traders": [
+      20.3,
+      20.2
+    ],
+    "Stephen's Spoils": [
+      11.4,
+      15.99
+    ],
+    "The Finest Trading Post": [
+      5.8,
+      17.7
+    ],
+    "The North Star Seapost": [
+      7.8,
+      10.8
+    ],
+    "The Spoils of Plenty Store": [
+      1.9,
+      7.7
+    ],
+    "The Wild Treasures Store": [
+      14.6,
+      4.9
+    ],
+    "Three Paces East Seapost": [
+      18.4,
+      9.7
+    ],
+    "Fort of The Damned": [
+      11.8,
+      14.6
+    ]
+  },
+  "outposts" : {
+    "Sanctuary Outpost": [
+      5.3,
+      7.3
+    ],
+    "Golden Sands Outpost": [
+      3.9,
+      10.9
+    ],
+    "Plunder Outpost": [
+      9.99,
+      18.6
+    ],
+    "Ancient Spire Outpost": [
+      16.25,
+      17.5
+    ],
+    "Galleon's Grave Outpost": [
+      17.6,
+      8.3
+    ],
+    "Dagger Tooth Outpost": [
+      12.8,
+      8.1
+    ],
+    "Morrow's Peak Outpost": [
+      21.6,
+      17.6
+    ]
+  }
+}

@@ -2,15 +2,17 @@
 import math, random
 
 class PossionDiscSampling():
-    def __init__(self,r,k=30):
+    def __init__(self,r,k,bounds):
         self.r = r
         self.k = k
-        self.bounds = []
+        self.bounds = bounds
 
         self.domain = []
         self.activeList = []
         self.cellSize = round(r / math.sqrt(2),2)
         self.points = []
+
+        self.defineGrid()
 
     def reset(self):
         self.domain = []
@@ -18,9 +20,8 @@ class PossionDiscSampling():
         self.activeList = []
         self.points = []
 
-    def defineGrid(self,existing=None):
-        if existing != None:
-            self.bounds = [int(existing[0]/self.cellSize),int(existing[1]/self.cellSize)]
+    def defineGrid(self):
+        self.bounds = [int(bound/self.cellSize) for bound in self.bounds]
         for y in range(self.bounds[1]):
             row = []
             for x in range(self.bounds[0]):

@@ -1,57 +1,68 @@
-import json
+import json, math
 import AntColonization
 
-tour = AntColonization.AntColony(100)
+def dist(p1,p2):
+    return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)
 
-data = json.loads(open('MapData.json','r').read())['islands']
-islandDict = {}
+class RouteController():
+    def __init__(self,iterations,NumOfOutposts=1):
+        self.mapData = json.loads(open('MapData.json','r').read())
+        self.islandDict = {}
+        self.ACO = AntColonization.AntColony(iterations)
+        self.solution = None
+        self.center = [0,0]
+        self.outpostNum = NumOfOutposts
 
-def addIsland(name):
-    pos = data[name]
-    islandDict[tour.nodeCounter] = name
-    tour.addNode(pos)
-    try:
-        pass
+    def addIsland(self,*islandNames):
+        for name in islandNames:
+            pos = self.mapData['islands'][name]
+            self.islandDict[self.ACO.nodeCounter] = name
+            self.center = [sum([x,y]) for x,y in zip(self.center,pos)]
+            self.ACO.addNode(pos)
+            try:
+                pass
+            except KeyError:
+                print("%s Not Found."%name)
 
-    except KeyError:
-        print("Island Not Found.")
+    def orderOutposts(self):
+        self.center = [pos/self.ACO.nodeCounter for pos in self.center]
+        currentIslands = list(self.islandDict.values())
+        ranking = []
+        for name,location in self.mapData['outposts'].items():
+            if name not in currentIslands:
+                ranking.append([name,dist(self.center,location)])
 
-def generateRoute():
-    tour.generateEdges()
-    tour.runPopulation()
-    dist, path = tour.finalTour(tour.nodes[0])
-    print(dist)
-    for island in path:
-        print(islandDict[island])
+        return (name for name, dist in sorted(ranking, key= lambda x : x[1])[:self.outpostNum])
 
-# addIsland('Sanctuary Outpost')
-# addIsland("Sailor's Bounty")
-# addIsland("Lone Cove")
-# addIsland("Hidden Spring Keep")
-# addIsland("Crescent Isle")
-# addIsland("The North Star Seapost")
-# addIsland("Picaroon Palms")
-# addIsland("Sea Dog's Rest")
-# addIsland("Old Faithful Isle")
-# addIsland("Keel Haul Fort")
+    def calculateRoute(self,resp=False):
+        for outpost in self.orderOutposts():
+            self.addIsland(outpost)
+        final = []
+        self.ACO.generateEdges()
+        self.ACO.runPopulation()
+        dist, path = self.ACO.solution
+        print("Traveled Distance: %s miles"%round(dist*0.2213,2))
+        for island in path:
+            final.append(island)
+            if resp == True:
+                print(self.islandDict[island])
 
-addIsland("Galleon's Grave Outpost")
-addIsland("Kraken's Fall")
-addIsland("Shark Tooth Key")
-addIsland("Isle of Last Words")
-addIsland("Shiver Retreat")
-addIsland("Tri-Rock Isle")
-addIsland("Shipwreck Bay")
-addIsland("Dagger Tooth Outpost")
-addIsland("The Sunken Grove")
-addIsland("Skull Keep")
-addIsland("The Crooked Masts")
-addIsland("Three Paces East Seapost")
-addIsland("Liar's Backbone")
-addIsland("Wanderers Refuge")
-addIsland("Cannon Cove")
-addIsland("Hidden Spring Keep")
+        self.solution = final
+        return self.solution
 
+if __name__ in "__main__":
+    plotter = RouteController(5000)
 
+    plotter.addIsland(
+        "Galleon's Grave Outpost",
+        "Kraken's Fall",
+        "Shark Tooth Key",
+        "Isle of Last Words",
+        "Shiver Retreat",
+        "Tri-Rock Isle",
+        "Shipwreck Bay",
+        "Dagger Tooth Outpost",
+        "The Sunken Grove"
+    )
 
-generateRoute()
+    plotter.generateRoute()
