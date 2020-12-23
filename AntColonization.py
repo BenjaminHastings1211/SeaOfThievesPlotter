@@ -95,6 +95,7 @@ class AntColony():
         self.popSize = populationSize
         self.startNode = None
         self.nodeCounter = 0
+        self.startTime = time.time()
 
     # add nodes to list when needed
     def addNode(self,*points):
@@ -121,11 +122,21 @@ class AntColony():
                 count += 1
 
     def runPopulation(self):
+        self.startTime = time.time()
         if self.edgesCreated == False:
             self.generateEdges()
             self.edgesCreated = True
         for i in range(self.popSize):
             self.ant.tour(None)
+
+
+    def log(self):
+        print("Data Points: %i"%self.nodeCounter)
+        print("Number Of Ants: %i"%self.popSize)
+        worst = self.ant.longestTrip
+        best = self.ant.shortestTrip[0]
+        print("Path Improvement: %.2f%s"%((worst-best)/worst*100,"%"))
+        print("Completed In: %.4f seconds"%(time.time()-self.startTime))
 
 class Ant():
     def __init__(self,parent):
@@ -194,8 +205,4 @@ if __name__ in '__main__':
 
     c.runPopulation()
 
-    finalDist, finalPath = c.finalTour(home)
-
-    print("Distance Diffrence: ", round((c.ant.longestTrip-finalDist)/c.ant.longestTrip*100,2),"%")
-    print("Final Path: ",finalPath)
-    print('Took: %s seconds'%round(time.time()-s,2))
+    c.log()

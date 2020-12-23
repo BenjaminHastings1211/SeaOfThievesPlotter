@@ -64,17 +64,17 @@ if __name__ in "__main__":
     aco = ACO(5000)
     sample = Sampling(100,10,(W-margin*2,H-margin*2))
     sample.createPoints()
-    print(len(sample.points))
 
     vis = Visualizer((W,H),margin)
 
     aco.addNode(*sample.points)
     aco.runPopulation()
-    print(aco.nodes)
     vis.insertNodeSet(*aco.nodes)
 
     vis.connectTheDots(aco.solution[1])
 
     vis.labelNodes()
+
+    aco.log()
 
     vis.mainloop()
