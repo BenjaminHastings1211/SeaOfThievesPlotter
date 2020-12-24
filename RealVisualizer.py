@@ -59,9 +59,9 @@ if __name__ in "__main__":
     from AntColonization import AntColony as ACO
     from PossionDisc import PossionDiscSampling as Sampling
     margin = 25
-    W,H = 700,500
+    W,H = 1000,800
 
-    aco = ACO(5000)
+    aco = ACO(50000)
     sample = Sampling(100,10,(W-margin*2,H-margin*2))
     sample.createPoints()
 
