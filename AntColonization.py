@@ -1,8 +1,4 @@
 import random, math, time
-from PossionDisc import PossionDiscSampling as Sampling
-
-# TODO: USE DICTIONARY TO HOLD DATA ON EDGES INSTEAD OF OBJECTS
-# TODO: REDUCE THE NUMBER OF LOOPS PER ITERATION
 
 W,H = 600,600
 
@@ -17,10 +13,6 @@ def determineEdgeValue(dist,div=1):
 
 def intJoin(x, y):
     return x*100+y
-
-# def intJoin(x,y):
-#     a = int(''.join([str(x),str(y)]))
-#     return a
 
 def generatePoints(num,margin,seed=0):
     random.seed(seed)
@@ -190,6 +182,7 @@ class Ant():
 
 
 if __name__ in '__main__':
+    from PossionDisc import PossionDiscSampling as Sampling
     s = time.time()
     c = AntColony(10000)
     c.addNode(*generatePoints(15,25,0))
