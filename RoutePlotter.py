@@ -13,14 +13,17 @@ class RouteController():
         self.center = [0,0]
         self.outpostNum = NumOfOutposts
 
+    def reset(self):
+        self.ACO.reset()
+        self.ACO.ant.reset()
+
     def addIsland(self,*islandNames):
         for name in islandNames:
-            pos = self.mapData['islands'][name]
-            self.islandDict[self.ACO.nodeCounter] = name
-            self.center = [sum([x,y]) for x,y in zip(self.center,pos)]
-            self.ACO.addNode(pos)
             try:
-                pass
+                pos = self.mapData['islands'][name]
+                self.islandDict[self.ACO.nodeCounter] = name
+                self.center = [sum([x,y]) for x,y in zip(self.center,pos)]
+                self.ACO.addNode(pos)
             except KeyError:
                 print("%s Not Found."%name)
 
@@ -34,21 +37,20 @@ class RouteController():
 
         return (name for name, dist in sorted(ranking, key= lambda x : x[1])[:self.outpostNum])
 
-    def calculateRoute(self,resp=False):
+    def calculateRoute(self):
+        final = []
         for outpost in self.orderOutposts():
             self.addIsland(outpost)
-        final = []
-        self.ACO.generateEdges()
-        self.ACO.runPopulation()
-        dist, path = self.ACO.solution
-        print("Traveled Distance: %s miles"%round(dist*0.2213,2))
-        for island in path:
-            final.append(island)
-            if resp == True:
-                print(self.islandDict[island])
+        if self.ACO.nodeCounter > 3:
+            self.ACO.generateEdges()
+            self.ACO.runPopulation()
 
-        self.solution = final
-        return self.solution
+            self.solution = self.ACO.ant.shortestTrip
+
+            return self.solution
+        else:
+            print("Not Enough Islands Given")
+            return
 
 if __name__ in "__main__":
     plotter = RouteController(5000)

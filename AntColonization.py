@@ -1,6 +1,9 @@
 import random, math, time
 from PossionDisc import PossionDiscSampling as Sampling
 
+# TODO: USE DICTIONARY TO HOLD DATA ON EDGES INSTEAD OF OBJECTS
+# TODO: REDUCE THE NUMBER OF LOOPS PER ITERATION
+
 W,H = 600,600
 
 def dist(n1,n2):
@@ -15,12 +18,15 @@ def determineEdgeValue(dist,div=1):
 def intJoin(x, y):
     return x*100+y
 
+# def intJoin(x,y):
+#     a = int(''.join([str(x),str(y)]))
+#     return a
+
 def generatePoints(num,margin,seed=0):
     random.seed(seed)
     points = []
     for i in range(num):
         points.append((random.randint(margin,W-margin),random.randint(margin,H-margin)))
-
     random.seed(time.time())
     return points
 
@@ -31,29 +37,21 @@ class Node():
         self.pos = pos
 
     def preferredPath(self,ant):
-        probList = self.generateProbability(ant)
-        rand = random.random()
-        for prob, edge in probList:
-            if prob[0] < rand < prob[1]:
-                path = edge
-                break
-        return path;
-
-    def generateProbability(self,ant):
         visitedNum = 0
         visitedTotalWeight = 0
         sample = []
         sampleSize = 0
-        for edge in self.edges:
+        for edge in self.edges:                # FOR LOOP RAN EVERY STEP IN THE TOUR, ITERATIONS = EDGES
             if edge.otherNode(self).tag not in ant.visited:
                 if edge.weight > 0:
                     visitedNum += 1
                     visitedTotalWeight += edge.weight
                 sample.append(edge)
                 sampleSize += 1
-        return self.finalProbability(sample,sampleSize,visitedTotalWeight,visitedNum)
+        return self.finalEdge(sample,sampleSize,visitedTotalWeight,visitedNum)
 
-    def finalProbability(self,sample,sampleSize,totalWeight,visitNum):
+    def finalEdge(self,sample,sampleSize,totalWeight,visitNum):
+        rand = random.random()
         upper = 0
         for edge in sample:
             base = upper
@@ -62,7 +60,8 @@ class Node():
             else:
                 prob = (1 / sampleSize)
             upper = base+prob
-            yield [[base,upper],edge]
+            if base < rand < upper:
+                return edge
 
 class Edge():
     def __init__(self,i,total,node1,node2):
@@ -86,14 +85,15 @@ class Edge():
 class AntColony():
     def __init__(self,populationSize):
         self.ant = Ant(self)
+        self.popSize = populationSize
+        self.reset()
+
+    def reset(self):
         self.nodes = []
         self.edges = []
         self.edgeDict = {}
         self.solution = None
         self.edgesCreated = False
-
-        self.popSize = populationSize
-        self.startNode = None
         self.nodeCounter = 0
         self.startTime = time.time()
 
@@ -103,12 +103,8 @@ class AntColony():
             self.nodes.append(Node(self.nodeCounter,pos))
             self.nodeCounter += 1
 
-    def randomNode(self):
-        return random.choice(self.nodes)
-
     def findEdgeBetweenNodes(self,tag1,tag2):
-        order = intJoin(*sorted([tag1,tag2]))
-        return self.edgeDict[order]
+        return self.edgeDict[intJoin(*sorted([tag1,tag2]))]
 
     # create all edges connecting the nodes
     def generateEdges(self):
@@ -127,82 +123,76 @@ class AntColony():
             self.generateEdges()
             self.edgesCreated = True
         for i in range(self.popSize):
-            self.ant.tour(None)
+            self.ant.tour()
 
-
-    def log(self):
-        print("Data Points: %i"%self.nodeCounter)
-        print("Number Of Ants: %i"%self.popSize)
+    def log(self,show=False):
         worst = self.ant.longestTrip
         best = self.ant.shortestTrip[0]
-        print("Path Improvement: %.2f%s"%((worst-best)/worst*100,"%"))
-        print("Completed In: %.4f seconds"%(time.time()-self.startTime))
+        if show:
+            print("Data Points: %i"%self.nodeCounter)
+            print("Number Of Ants: %i"%self.popSize)
+            print("Shortest Path Found: %.2f units"%best)
+            print("Path Improvement: %.2f%s"%((worst-best)/worst*100,"%"))
+            print("Completed In: %.4f seconds"%(time.time()-self.startTime))
+
+        return {
+            'points'    : self.nodeCounter,
+            'ants'      : self.popSize,
+            'solution'  : best,
+            'worst'     : worst,
+            'time'      : (time.time()-self.startTime)
+        }
 
 class Ant():
     def __init__(self,parent):
         self.parent = parent
+        self.reset()
+
+    def reset(self):
         self.location = None;
         self.start = None
         self.visited = []
         self.usedEdges = []
         self.longestTrip = None
         self.shortestTrip = None
-
         self.distance = 0
 
     def updateStats(self):
-        if self.longestTrip == None and self.shortestTrip == None:
+        if self.longestTrip == None or self.longestTrip < self.distance:
             self.longestTrip = self.distance
-            self.shortestTrip = [self.distance,self.visited]
-        elif self.longestTrip < self.distance:
-            self.longestTrip = self.distance
-        elif self.shortestTrip[0] > self.distance:
+        elif self.shortestTrip == None or self.shortestTrip[0] > self.distance:
             self.shortestTrip = [self.distance,self.visited]
             self.parent.solution = self.shortestTrip
 
-    def tour(self,start,report=False):
-        self.location = start
+    def tour(self):
+        self.location = random.choice(self.parent.nodes)
+        self.start = self.location
         self.distance = 0
         self.visited = []
         self.usedEdges = []
-        if start == None:
-            self.location = self.parent.randomNode()
-        self.start = self.location
-        self.visitNode(self.location)
+        self.visited.append(self.location.tag)
 
         for i in range(self.parent.nodeCounter-1):
-            path = self.location.preferredPath(self)
-            self.usedEdges.append(path)
-            self.distance += path.length
-            self.location = path.travelOn(self.location)
-            self.visitNode(self.location)
+            self.takePath(self.location.preferredPath(self))
 
-        path = self.parent.findEdgeBetweenNodes(self.location.tag,self.start.tag)
-        self.distance += path.length
-        self.location = path.travelOn(self.location)
-        self.visitNode(self.location)
-
+        self.takePath(self.parent.findEdgeBetweenNodes(self.location.tag,self.start.tag))
         pathWeight = determineEdgeValue(self.distance,self.parent.nodeCounter)
         for edge in self.usedEdges:
             edge.weight += pathWeight
 
         self.updateStats()
 
-        if report == True:
-            return [self.distance,self.visited]
-        return 0
+    def takePath(self,path):
+        self.usedEdges.append(path)
+        self.distance += path.length
+        self.location = path.travelOn(self.location)
+        self.visited.append(self.location.tag)
 
-    def visitNode(self,node):
-        self.visited.append(node.tag)
 
 if __name__ in '__main__':
     s = time.time()
-    c = AntColony(1000)
-    c.addNode(*generatePoints(7,25,324))
+    c = AntColony(10000)
+    c.addNode(*generatePoints(15,25,0))
     c.generateEdges()
-
-    home = c.nodes[0]
-
     c.runPopulation()
-
-    c.log()
+    c.log(True)

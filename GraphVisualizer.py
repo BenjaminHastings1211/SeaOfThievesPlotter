@@ -38,43 +38,42 @@ class Visualizer(Tk):
         y2 = self.scalePoint([0,2])[1]
         self.unitSize = [x2-x1,y2-y1]
 
-    def labelNodes(self):
+    def numberNodes(self,fontSize=48):
         for i, node in enumerate(self.nodes):
             pos = self.scalePoint(node)
-            self.cnv.create_text(pos[0],pos[1],text=i,font=('Arial',48),fill='red')
+            self.cnv.create_text(pos[0],pos[1],text=i,font=('Arial',fontSize),fill='red')
 
     def scalePoint(self,point):
         return [mapVal(val,self.closeToOrigin[i],self.farFromOrigin[i],self.margin,self.size[i]-self.margin) for i, val in enumerate(point)]
 
     def connectTheDots(self,orderedList):
+        print(orderedList)
         for index, path in enumerate(orderedList):
-            next = orderedList[index+1]
+            try:
+                next = orderedList[index+1]
+            except: break
+            print(self.nodes[path])
             p1 = self.scalePoint(self.nodes[path])
             p2 = self.scalePoint(self.nodes[next])
-            self.cnv.create_line(p1[0],p1[1],p2[0],p2[1])
-            if next == orderedList[0]:
-                break;
+            self.cnv.create_line(p1[0],p1[1],p2[0],p2[1],fill='black')
+            # if next == orderedList[0]:
+            #     break;
 
 if __name__ in "__main__":
-    from AntColonization import AntColony as ACO
+    import AntColonization as ACO
     from PossionDisc import PossionDiscSampling as Sampling
     margin = 25
-    W,H = 1000,800
-
-    aco = ACO(50000)
-    sample = Sampling(100,10,(W-margin*2,H-margin*2))
+    W,H = 600,500
+    sample = Sampling(65,10,(W-margin*2,H-margin*2))
     sample.createPoints()
 
-    vis = Visualizer((W,H),margin)
-
+    aco = ACO.AntColony(10000)
     aco.addNode(*sample.points)
     aco.runPopulation()
-    vis.insertNodeSet(*aco.nodes)
-
-    vis.connectTheDots(aco.solution[1])
-
-    vis.labelNodes()
-
     aco.log()
 
+    vis = Visualizer((W,H),margin)
+    vis.insertNodeSet(*aco.nodes)
+    vis.connectTheDots(aco.solution[1])
+    vis.numberNodes()
     vis.mainloop()

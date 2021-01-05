@@ -1,4 +1,3 @@
-
 import math, random
 
 class PossionDiscSampling():
@@ -88,10 +87,20 @@ class Cell():
 
 
 if __name__ in "__main__":
-    sampling = PossionDiscSampling(50,20)
-    sampling.defineGrid((500,500))
-    sampling.insertPoint((250,250))
+    from GraphVisualizer import Visualizer
 
+    class Node():
+        def __init__(self,pos):
+            self.pos = pos
+
+    sampling = PossionDiscSampling(20,20,(1000,800))
     sampling.createPoints()
+
+    vis = Visualizer((1000,800),margin=25)
+    vis.insertNodeSet(*[Node(pos) for pos in sampling.points])
+    vis.numberNodes(fontSize=15)
+
+    # print(sampling.points)
+    vis.mainloop()
 
     print('Done')
