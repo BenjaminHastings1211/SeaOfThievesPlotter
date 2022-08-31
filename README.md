@@ -5,3 +5,7 @@
 <p>
 The final application of this project helps players determine the best route to take while sailing.
 </p>
+<h3><b>The Code</b></h3>
+<p>
+The routing problem is solved with my implimentation of the Ant Colony Optimization to generate the fastest path between locations.
+</p>
